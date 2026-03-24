@@ -9,12 +9,14 @@
 std::string Parser::get_hostname(std::string &url) {
   size_t host_start = url.find(":");
 
-  std::string hostname;
+  std::string hostname = url;
   if(host_start != std::string::npos) {
     hostname = url.erase(0, host_start + 3);
   }
   size_t host_end = url.find("/");
-  hostname = url.substr(0, host_end);
+  if(host_end != std::string::npos) {
+    hostname = url.substr(0, host_end);
+  }
   
   std::cout << "Host: " << hostname << "\n";
   return hostname;
@@ -72,7 +74,17 @@ void Parser::response_parser(const std::vector<uint8_t> &response, size_t label_
   size_t rr_start = 12 + label_size + question_size;
   std::vector<uint8_t> resource_record(response.begin() + rr_start, response.end()); 
   
-  size_t offset = 2;
+  size_t offset = 0;
+
+  if((resource_record[offset] & 0xC0) == 0xC0) {
+    offset += 2;
+  }
+  else {
+    while(resource_record[offset] != 0x00) {
+      offset += resource_record[offset] + 1;
+    }
+    offset += 1;
+  }
 
   uint16_t type = (resource_record[offset] << 8) | resource_record[offset + 1]; offset += 2;
   offset += 2; //skip CLASS 
