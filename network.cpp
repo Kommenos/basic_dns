@@ -8,10 +8,9 @@
 #include <unistd.h>
 
 int Network::server_connection() {
-  //udp socket creation
   int sock_fd = socket(AF_INET, SOCK_DGRAM, 0);
   if (sock_fd == -1) {
-    std::cerr << "Socket initialization failed" << std::endl;
+    std::cerr << "Socket creation failed" << std::endl;
     return -1;
   }
 
