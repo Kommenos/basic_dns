@@ -18,7 +18,7 @@ std::string Parser::get_hostname(std::string &url) {
     hostname = url.substr(0, host_end);
   }
   
-  std::cout << "Host: " << hostname << "\n";
+  std::cout << hostname << " ";
   return hostname;
 }
 
@@ -97,7 +97,7 @@ void Parser::response_parser(const std::vector<uint8_t> &response, size_t label_
       std::to_string(resource_record[offset + 2]) + "." +
       std::to_string(resource_record[offset + 3]);
     
-    std::cout << "IP: " << ip;
+    std::cout << ip << " A";
   }
 
 }
