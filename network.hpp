@@ -11,7 +11,7 @@ class Network {
   public:
     Network() {}
 
-    //NOTE: Method initialization must be in sequence, accordingly to network.cpp
+    //NOTE: Method declaration must be in sequence, accordingly to network.cpp
     int server_connection();
     std::vector<uint8_t> get_response(const std::vector<uint8_t> &dns_message, const int &sock_fd);
 };

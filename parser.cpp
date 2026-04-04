@@ -46,8 +46,8 @@ std::vector<uint8_t> Parser::encode_hostname(std::string &url) {
 std::vector<uint8_t> Parser::create_message(std::vector<uint8_t> &label) {
   std::vector<uint8_t> message;
 
-  uint8_t header[12] = {
-    0xAA, 0xBB, //ID = 1
+  uint8_t header[12] = { 
+    0xAA, 0xBB, //ID = AABB
     0x01, 0x00, //Flags = 1
     0x00, 0x01, //QDCOUNT = 1
     0x00, 0x00, //ANCOUNT
@@ -99,7 +99,6 @@ void Parser::response_parser(const std::vector<uint8_t> &response, size_t label_
     
     std::cout << ip << " A";
   }
-
 }
 
 

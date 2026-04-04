@@ -5,11 +5,11 @@
 
 class Parser {
   private:
-    size_t question_size;
+    size_t question_size; 
   public:
     Parser() {}
     
-    //NOTE: Method initialization must be in sequence, accordingly to parser.cpp
+    //NOTE: Method declaration must be in sequence, accordingly to parser.cpp
     std::string get_hostname(std::string &url);
     std::vector<uint8_t> encode_hostname(std::string &url);
     std::vector<uint8_t> create_message(std::vector<uint8_t> &label);

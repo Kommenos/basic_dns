@@ -23,10 +23,7 @@ bool is_url_valid(const std::string &url) {
       "$"
   );
   
-  if(std::regex_match(url, domain_pattern)) {
-    return true;
-  }
-  else if(std::regex_match(url, url_pattern)) {
+  if(std::regex_match(url, domain_pattern) || std::regex_match(url, url_pattern)) {
     return true;
   }
   else {
@@ -54,10 +51,11 @@ int main(int argc, char *argv[]) {
     std::cerr << "This is not a valid url or domain name" << std::endl;
     return 1;
   }
-  std::vector<uint8_t> dns_message = parser.create_message(encoded_hostname);
 
+  std::vector<uint8_t> dns_message = parser.create_message(encoded_hostname);
   int sock_fd = network.server_connection();
   std::vector<uint8_t> response = network.get_response(dns_message, sock_fd);
+  
   /*for(uint8_t parts : response) {
     printf("%02x ", parts);
   }*/
@@ -67,6 +65,7 @@ int main(int argc, char *argv[]) {
     close(sock_fd);
     return -1;
   }
+
   parser.response_parser(response, encoded_hostname.size(), parser.get_question_size());
   close(sock_fd);
   
